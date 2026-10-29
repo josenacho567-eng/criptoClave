@@ -122,3 +122,71 @@ ui → flujo → evaluacion
 
 Cada flecha significa "puede importar a". `modelo` no importa a nadie, y `ui` es lo único que conoce la librería gráfica.
 
+# Ramas
+
+## Qué hace cada comando
+
+| Comando | Qué hace |
+| --- | --- |
+| `git checkout main` | Te cambia a la rama `main`. Tus archivos locales pasan a mostrar el estado de esa rama. |
+| `git pull` | Descarga de GitHub los cambios nuevos de la rama en la que estás y los une con tu copia local. Como estás en `main`, trae lo que tu compañero ya haya integrado. |
+| `git checkout -b nombre-de-la-tarea` | Crea una rama nueva, partiendo del punto actual, y te cambia a ella. La `-b` significa "crear". |
+
+Juntos significan: "ve a `main`, actualízala con lo último de GitHub, y crea desde ahí mi rama de trabajo". Así tu rama nace con el código más reciente y evitas conflictos innecesarios.
+
+Nota: en versiones recientes de Git, `git switch main` y `git switch -c nombre` hacen lo mismo; ambas formas sirven.
+
+## ¿Muchas ramas?
+
+Sí, **una rama por tarea**, pero no por cada cambio pequeño. Una rama es una copia de trabajo temporal: se crea, se termina la tarea, se une a `main` y se descarta. Así:
+
+- Cada uno trabaja aislado sin romper lo del otro.
+- `main` siempre compila y funciona.
+- Los cambios se revisan antes de entrar.
+
+### Ejemplos de ramas para este proyecto
+
+```
+modelo-base
+reglas-evaluacion
+cifrado-cesar
+cifrado-vigenere
+cifrado-huffman
+cifrado-rsa
+flujo-estado
+ui-pantalla-evaluar
+ui-pantalla-metodo
+documento-decisiones
+```
+
+### Qué es una "tarea"
+Algo que puedes terminar en una o pocas sesiones, como un cifrado completo con sus tests. Si una rama dura más de unos días, divídela. Y tampoco hace falta una rama para corregir una coma en el README, aunque con pocos cambios es válido hacerlo en una rama corta.
+
+## Ciclo de vida de una rama
+
+```bash
+git checkout main
+git pull
+git checkout -b cifrado-rsa      # 1. crear
+
+# ... programas, y haces varios commits ...
+git add .
+git commit -m "Agrega validación de primos"
+git commit -m "Agrega cifrado y descifrado"
+
+git push -u origin cifrado-rsa   # 2. subirla a GitHub
+# 3. Pull request en GitHub, tu compañero revisa, Merge
+git checkout main
+git pull                         # 4. traer tu propio trabajo ya integrado
+git branch -d cifrado-rsa        # 5. borrar la rama local (opcional)
+```
+
+Dentro de una rama puedes hacer todos los commits que quieras; lo que cuenta es que la rama represente una sola tarea.
+
+## Consejos para ustedes dos
+
+- **No trabajen los dos en la misma rama**: cada uno la suya.
+- Si tu rama tarda varios días y `main` avanzó, tráete lo nuevo con `git checkout tu-rama` y `git merge main`, así detectas conflictos temprano.
+- Nombres cortos, en minúsculas y con guiones, que digan qué hace la rama.
+- Después del Merge en GitHub, borren la rama remota desde el botón **Delete branch** para no acumular basura.
+
