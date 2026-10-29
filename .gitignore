@@ -1,0 +1,21 @@
+# Compilación
+target/
+project/target/
+project/project/
+
+# Metals, Bloop y BSP
+.metals/
+.bloop/
+.bsp/
+.scala-build/
+project/metals.sbt
+
+# Editores
+.idea/
+.vscode/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.class
+*.log
