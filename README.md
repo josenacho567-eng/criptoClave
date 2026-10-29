@@ -122,4 +122,3 @@ ui → flujo → evaluacion
 
 Cada flecha significa "puede importar a". `modelo` no importa a nadie, y `ui` es lo único que conoce la librería gráfica.
 
-¿Quieres que genere ahora el esqueleto de la Fase 0 (`build.sbt`, `modelo/` completo y las firmas con `???`) para subirlo al repo?
