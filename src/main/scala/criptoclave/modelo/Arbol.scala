@@ -9,8 +9,8 @@ case class Hoja[A](
 ) extends Arbol[A]
 
 case class Nodo[A](
-    val izquerda: Arbol[A],
-    val derecha: Arbol[A]
+    val izquierda: Arbol[A],
+    val derecha: Arbol[A] 
 ) extends Arbol[A] {
-    def frecuencia: Int = izquerda.frecuencia + derecha.frecuencia
+    val frecuencia: Int = izquierda.frecuencia + derecha.frecuencia
 }
