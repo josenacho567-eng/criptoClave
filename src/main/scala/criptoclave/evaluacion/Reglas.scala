@@ -12,7 +12,8 @@ object Reglas{
     "1qaz2wsx", "zag12wsx", "1g2w3e4r", "asdfghjkl", "abc123", "abcd1234",
     "a123456", "123456a", "iloveyou", "secret", "dragon", "monkey",
     "football", "target123", "tinkle", "gwerty", "gwerty123",
-    "hola", "contraseña", "admin"
+    "hola", "contraseña", "admin", "root", "contrasena", "admin@123", "Pass123",
+    "Pass@123", "2026"
     )
     
     val reglas:List[Regla[String]] = List(
