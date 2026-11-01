@@ -12,7 +12,7 @@ object Reglas{
     "1qaz2wsx", "zag12wsx", "1g2w3e4r", "asdfghjkl", "abc123", "abcd1234",
     "a123456", "123456a", "iloveyou", "secret", "dragon", "monkey",
     "football", "target123", "tinkle", "gwerty", "gwerty123",
-    "hola", "admin", "root", "contrasena", "admin@123", "pass123",
+    "hola", "admin", "root", "contrasena", "contraseña", "admin@123", "pass123",
     "pass@123", "2026", "hola67", "triplet", "skibidi", "perros", "gatos", "aura67"
     )
     
