@@ -22,8 +22,8 @@ object Cesar {
             s"$acum$caracterDesplazado"
         } else {
             val caracterDesplazado: Char = desplazar(clave.head, tamano - desplazamiento)
-            if acum == "" then aplicarCifrado(clave.tail, tamano - desplazamiento, s"$caracterDesplazado")
-            else aplicarCifrado(clave.tail, tamano - desplazamiento, s"$acum$caracterDesplazado")
+            if acum == "" then revertirCifrado(clave.tail, tamano - desplazamiento, s"$caracterDesplazado")
+            else revertirCifrado(clave.tail, tamano - desplazamiento, s"$acum$caracterDesplazado")
         }
     }
 

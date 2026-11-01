@@ -41,15 +41,4 @@ object Vigenere {
         if clave.length() > llave.length() then revertirCifradoAux(clave, extenderLlave(llave, clave.length() - llave.length(), llave))
         else revertirCifradoAux(clave, llave)
     }
-
-    def main(args: Array[String]): Unit = {
-        println(aplicarCifrado("ho la ", "zzza"))
-        println(revertirCifrado("äëèÄ", "zzza"))
-        println(revertirCifrado(aplicarCifrado("ho la ", "zzza"), "zzza"))
-        println(aplicarCifrado("paris", "loup"))
-        println(revertirCifrado(aplicarCifrado("paris", "loup"), "loup"))
-        println(revertirCifrado("??é?á", "loup"))
-        println(aplicarCifrado("Sol#2024", "Clave"))
-
-    }
 }
