@@ -3,6 +3,7 @@ package criptoclave.modelo
 sealed trait Arbol[A]{
     def frecuencia: Int
 }
+
 case class Hoja[A](
     val caracter: A,
     val frecuencia: Int
