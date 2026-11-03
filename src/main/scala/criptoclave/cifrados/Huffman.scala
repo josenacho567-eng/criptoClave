@@ -49,12 +49,28 @@ object Huffman {
         (cifrado, arbol)
     }
 
+    def revertirCifrado(clave: String, arbol: Arbol[Char], arbol2: Arbol[Char], acum: String = ""): String = {
+        //if clave.isEmpty() then acum 
+        //else {
+            arbol match
+                case Nodo(izquierda, derecha) => {
+                    if clave.isEmpty() then acum
+                    if clave.head == '0' then revertirCifrado(clave.tail, izquierda, arbol2, acum)
+                    else revertirCifrado(clave.tail, derecha, arbol2, acum)
+                }
+                case Hoja(caracter, frecuencia) => {
+                    if clave.isEmpty then (if acum == "" then s"$caracter" else s"$acum$caracter")
+                    else revertirCifrado(clave, arbol2, arbol2, if acum == "" then s"$caracter" else s"$acum$caracter" )
+                }
+        //}
+    }
+
     def main(args: Array[String]): Unit = {
         println(contarCaracteres("holaa"))
-        //println(aplicarCifrado("holaa"))
         println(construirArbol(contarCaracteres("holaa")))
         println(generarCodigos(construirArbol(contarCaracteres("holaaal"))))
         println(aplicarCifrado("holaal"))
+        println(revertirCifrado("101100011110", Nodo(Hoja('l',2),Nodo(Nodo(Hoja('o',1),Hoja('h',1)),Hoja('a',2))), Nodo(Hoja('l',2),Nodo(Nodo(Hoja('o',1),Hoja('h',1)),Hoja('a',2)))))
     }
 
     
