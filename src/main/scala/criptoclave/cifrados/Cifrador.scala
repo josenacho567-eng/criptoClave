@@ -66,7 +66,7 @@ object Cifrador {
                 case (Sustitucion(llave), _) =>
                     Exito(criptoclave.cifrados.Sustitucion.revertirCifrado(texto, llave))
                 case (Huffman, Some(ArbolHuffman(arbol))) =>
-                    Exito(criptoclave.cifrados.Huffman.revertirCifrado(texto, arbol,arbol))
+                    Exito(criptoclave.cifrados.Huffman.revertirCifrado(texto, arbol))
                 case (Rsa(_, _, _), Some(clavePrivada: ClavePrivada)) =>
                     Exito(criptoclave.cifrados.RSA.revertirCifrado(clavePrivada, texto))
                 case (Huffman, _) =>

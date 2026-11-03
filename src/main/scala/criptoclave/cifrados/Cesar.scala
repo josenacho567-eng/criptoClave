@@ -21,10 +21,15 @@ object Cesar {
             val caracterDesplazado: Char = desplazar(clave.head, tamano - desplazamiento)
             s"$acum$caracterDesplazado"
         } else {
-            val caracterDesplazado: Char = desplazar(clave.head, tamano - desplazamiento)
-            if acum == "" then revertirCifrado(clave.tail, tamano - desplazamiento, s"$caracterDesplazado")
-            else revertirCifrado(clave.tail, tamano - desplazamiento, s"$acum$caracterDesplazado")
+            val caracterDesplazado: Char = desplazar(clave.head, - desplazamiento)
+            if acum == "" then revertirCifrado(clave.tail,desplazamiento, s"$caracterDesplazado")
+            else revertirCifrado(clave.tail,desplazamiento, s"$acum$caracterDesplazado")
         }
+    }
+
+    def main(args: Array[String]): Unit = {
+        println(aplicarCifrado("hola",3))
+        println(revertirCifrado("krod",3))
     }
 
 }

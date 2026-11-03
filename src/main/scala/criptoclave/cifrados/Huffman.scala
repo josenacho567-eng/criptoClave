@@ -45,20 +45,31 @@ object Huffman {
 
     def aplicarCifrado(clave: String): (String, Arbol[Char]) = {
         val arbol = construirArbol(contarCaracteres(clave))
-        val cifrado = codificar(clave,(generarCodigos(arbol))) 
+        val codigos = arbol match {
+            case Hoja(caracter, _) => Map(caracter -> "0")
+            case _ => generarCodigos(arbol)
+        }
+        val cifrado = codificar(clave,codigos) 
         (cifrado, arbol)
     }
 
-    def revertirCifrado(clave: String, arbol: Arbol[Char], arbol2: Arbol[Char], acum: String = ""): String = {
+    def revertirCifrado(clave: String, arbol: Arbol[Char]): String = {
+    arbol match {
+        case Hoja(caracter, _) => clave.map(_ => caracter)
+        case _ => decodificar(clave, arbol, arbol)
+        }
+    }
+
+    def decodificar(clave: String, arbol: Arbol[Char], arbol2: Arbol[Char], acum: String = ""): String = {
         arbol match
             case Nodo(izquierda, derecha) => {
                 if clave.isEmpty() then acum
-                if clave.head == '0' then revertirCifrado(clave.tail, izquierda, arbol2, acum)
-                else revertirCifrado(clave.tail, derecha, arbol2, acum)
+                else if clave.head == '0' then decodificar(clave.tail, izquierda, arbol2, acum)
+                else decodificar(clave.tail, derecha, arbol2, acum)
             }
             case Hoja(caracter, frecuencia) => {
                 if clave.isEmpty then (if acum == "" then s"$caracter" else s"$acum$caracter")
-                else revertirCifrado(clave, arbol2, arbol2, if acum == "" then s"$caracter" else s"$acum$caracter" )
+                else decodificar(clave, arbol2, arbol2, if acum == "" then s"$caracter" else s"$acum$caracter" )
             }
     }
 
@@ -67,7 +78,8 @@ object Huffman {
         println(construirArbol(contarCaracteres("holaa")))
         println(generarCodigos(construirArbol(contarCaracteres("holaaal"))))
         println(aplicarCifrado("aaa"))
-        println(revertirCifrado("101100011110", Nodo(Hoja('l',2),Nodo(Nodo(Hoja('o',1),Hoja('h',1)),Hoja('a',2))), Nodo(Hoja('l',2),Nodo(Nodo(Hoja('o',1),Hoja('h',1)),Hoja('a',2)))))
+        println(revertirCifrado("101100011110", Nodo(Hoja('l',2),Nodo(Nodo(Hoja('o',1),Hoja('h',1)),Hoja('a',2)))))
+        println(revertirCifrado("000",Hoja('a',3)))
     }
 
     
