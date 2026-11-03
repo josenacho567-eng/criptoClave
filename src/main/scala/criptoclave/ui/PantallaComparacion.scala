@@ -54,6 +54,7 @@ object PantallaComparacion {
 
         val columnas = List("Método", "Salida", "Puntaje", "Nivel", "Diferencia", "Veredicto")
         val tabla = new Table(filas, columnas)
+        tabla.peer.setRowHeight(28)
         // Las celdas no se pueden editar y solo se elige una fila a la vez
         tabla.peer.setDefaultEditor(classOf[Object], null)
         tabla.peer.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION)
