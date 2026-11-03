@@ -50,19 +50,16 @@ object Huffman {
     }
 
     def revertirCifrado(clave: String, arbol: Arbol[Char], arbol2: Arbol[Char], acum: String = ""): String = {
-        //if clave.isEmpty() then acum 
-        //else {
-            arbol match
-                case Nodo(izquierda, derecha) => {
-                    if clave.isEmpty() then acum
-                    if clave.head == '0' then revertirCifrado(clave.tail, izquierda, arbol2, acum)
-                    else revertirCifrado(clave.tail, derecha, arbol2, acum)
-                }
-                case Hoja(caracter, frecuencia) => {
-                    if clave.isEmpty then (if acum == "" then s"$caracter" else s"$acum$caracter")
-                    else revertirCifrado(clave, arbol2, arbol2, if acum == "" then s"$caracter" else s"$acum$caracter" )
-                }
-        //}
+        arbol match
+            case Nodo(izquierda, derecha) => {
+                if clave.isEmpty() then acum
+                if clave.head == '0' then revertirCifrado(clave.tail, izquierda, arbol2, acum)
+                else revertirCifrado(clave.tail, derecha, arbol2, acum)
+            }
+            case Hoja(caracter, frecuencia) => {
+                if clave.isEmpty then (if acum == "" then s"$caracter" else s"$acum$caracter")
+                else revertirCifrado(clave, arbol2, arbol2, if acum == "" then s"$caracter" else s"$acum$caracter" )
+            }
     }
 
     def main(args: Array[String]): Unit = {
