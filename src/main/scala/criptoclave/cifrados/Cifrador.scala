@@ -24,6 +24,7 @@ object Cifrador {
         if texto.isEmpty then Fallo("Escribe una contraseña")
         else {
             metodo match {
+                // Cesar puede Cifrar con desplazamiento negativo (va hacia atrás)
                 case Vigenere(llave) if !llaveValida(llave) =>
                     Fallo("La clave de Vigenère debe tener al menos un carácter y todos válidos")
                 case Sustitucion(llave) if !llaveValida(llave) =>

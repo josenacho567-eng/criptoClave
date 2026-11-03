@@ -6,19 +6,38 @@ import criptoclave.modelo.*
 
 object Flujo {
 
-    // Criterios de ordenamiento (funciones que se pasan a probarTodos)
     val porPuntaje: Prueba => Int = prueba => prueba.evaluacion.puntaje
     val porDiferencia: Prueba => Int = prueba => prueba.diferencia
 
-    // Transiciones de estado
-    def evaluar(contrasena: String): Resultado[EstadoApp] = {
-        Evaluador.evaluar(contrasena).map(evaluacion => Evaluada(contrasena, evaluacion))
+    def baseDe(estado: EstadoApp): Resultado[(String, Evaluacion)] = {
+        estado match {
+            case Inicio                                => Fallo("Primero evalúa una clave")
+            case Evaluada(clave, evaluacion)      => Exito((clave, evaluacion))
+            case ConPruebas(clave, evaluacion, _) => Exito((clave, evaluacion))
+        }
+    }
+
+    def crearPrueba(clave: String, original: Evaluacion, metodo: Metodo): Resultado[Prueba] = {
+        for {
+            cifrado    <- Cifrador.aplicar(metodo, clave)
+            evaluacion <- Evaluador.evaluar(cifrado.texto)
+        } yield Prueba(
+            metodo,
+            cifrado.texto,
+            cifrado.datos,
+            evaluacion,
+            evaluacion.puntaje - original.puntaje
+        )
+    }
+
+    def evaluar(clave: String): Resultado[EstadoApp] = {
+        Evaluador.evaluar(clave).map(evaluacion => Evaluada(clave, evaluacion))
     }
 
     def probar(estado: EstadoApp, metodo: Metodo): Resultado[EstadoApp] = {
-        baseDe(estado).flatMap[EstadoApp] { case (contrasena, original) =>
-            crearPrueba(contrasena, original, metodo).map(prueba =>
-                ConPruebas(contrasena, original, estado.pruebas :+ prueba)
+        baseDe(estado).flatMap[EstadoApp] { case (clave, original) =>
+            crearPrueba(clave, original, metodo).map(prueba =>
+                ConPruebas(clave, original, estado.pruebas :+ prueba)
             )
         }
     }
@@ -38,30 +57,9 @@ object Flujo {
 
     def reiniciar(): EstadoApp = Inicio
 
-    // Revertir una prueba
     def revertir(prueba: Prueba): Resultado[String] = {
         Cifrador.revertir(prueba.metodo, prueba.salida, prueba.datos)
     }
 
-    // Auxiliares
-    private def baseDe(estado: EstadoApp): Resultado[(String, Evaluacion)] = {
-        estado match {
-            case Inicio                                => Fallo("Primero evalúa una contraseña")
-            case Evaluada(contrasena, evaluacion)      => Exito((contrasena, evaluacion))
-            case ConPruebas(contrasena, evaluacion, _) => Exito((contrasena, evaluacion))
-        }
-    }
-
-    private def crearPrueba(contrasena: String, original: Evaluacion, metodo: Metodo): Resultado[Prueba] = {
-        for {
-            cifrado    <- Cifrador.aplicar(metodo, contrasena)
-            evaluacion <- Evaluador.evaluar(cifrado.texto)
-        } yield Prueba(
-            metodo,
-            cifrado.texto,
-            cifrado.datos,
-            evaluacion,
-            evaluacion.puntaje - original.puntaje
-        )
-    }
+    
 }
