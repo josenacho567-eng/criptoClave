@@ -40,8 +40,4 @@ object RSA {
         arregloCodigos
     }
 
-    def main(args: Array[String]): Unit = {
-        println(aplicarCifrado(17, 19, 5, "TungTungTungSahur67"))
-        println(revertirCifrado(ClavePrivada(173,323),"50 53 230 69 50 53 230 69 50 53 230 69 87 241 168 53 190 175 310"))
-    }
 }

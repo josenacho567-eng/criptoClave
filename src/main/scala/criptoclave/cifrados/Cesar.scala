@@ -27,9 +27,4 @@ object Cesar {
         }
     }
 
-    def main(args: Array[String]): Unit = {
-        println(aplicarCifrado("hola",3))
-        println(revertirCifrado("krod",3))
-    }
-
 }

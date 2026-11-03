@@ -43,15 +43,15 @@ object Flujo {
     }
 
     def probarTodos(estado: EstadoApp, metodos: List[Metodo], criterio: Prueba => Int): Resultado[EstadoApp] = {
-        baseDe(estado).flatMap[EstadoApp] { case (contrasena, original) =>
+        baseDe(estado).flatMap[EstadoApp] { case (clave, original) =>
             val ranking = metodos
-                .flatMap(metodo => crearPrueba(contrasena, original, metodo) match {
+                .flatMap(metodo => crearPrueba(clave, original, metodo) match {
                     case Exito(prueba) => List(prueba)
                     case Fallo(_)      => Nil
                 })
                 .sortBy(prueba => -criterio(prueba))
             if ranking.isEmpty then Fallo("Ningún método se pudo aplicar")
-            else Exito(ConPruebas(contrasena, original, ranking))
+            else Exito(ConPruebas(clave, original, ranking))
         }
     }
 
@@ -60,6 +60,5 @@ object Flujo {
     def revertir(prueba: Prueba): Resultado[String] = {
         Cifrador.revertir(prueba.metodo, prueba.salida, prueba.datos)
     }
-
     
 }

@@ -73,14 +73,4 @@ object Huffman {
             }
     }
 
-    def main(args: Array[String]): Unit = {
-        println(contarCaracteres("holaa"))
-        println(construirArbol(contarCaracteres("holaa")))
-        println(generarCodigos(construirArbol(contarCaracteres("holaaal"))))
-        println(aplicarCifrado("aaa"))
-        println(revertirCifrado("101100011110", Nodo(Hoja('l',2),Nodo(Nodo(Hoja('o',1),Hoja('h',1)),Hoja('a',2)))))
-        println(revertirCifrado("000",Hoja('a',3)))
-    }
-
-    
 }
