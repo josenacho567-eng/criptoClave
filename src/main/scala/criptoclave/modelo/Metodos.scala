@@ -8,11 +8,11 @@ case class Cesar(
 ) extends Metodo
 
 case class Vigenere(
-    clave: String
+    llave: String
 ) extends Metodo
 
 case class Sustitucion(
-    clave: String
+    llave: String
 ) extends Metodo
 
 case class Rsa(
