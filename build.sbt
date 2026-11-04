@@ -6,7 +6,8 @@ lazy val root = (project in file("."))
     name := "criptoclave",
     libraryDependencies ++= Seq(
       "org.scala-lang.modules" %% "scala-swing" % "3.0.0",
-      "org.scalameta"          %% "munit"       % "1.0.0" % Test
+      "org.scalameta"          %% "munit"       % "1.0.0" % Test,
+      "com.formdev" % "flatlaf" % "3.5.4"
     ),
     // Evita problemas con la ventana al ejecutar con sbt run
     run / fork := true
