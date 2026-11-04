@@ -1,7 +1,9 @@
 package criptoclave
 
-import com.formdev.flatlaf.FlatDarkLaf
+import com.formdev.flatlaf.FlatLaf
+import com.formdev.flatlaf.FlatLightLaf
 import criptoclave.ui.Ventana
+import java.util.Collections
 import javax.swing.UIManager
 import scala.swing.Swing
 
@@ -9,11 +11,14 @@ object Main {
 
     def main(args: Array[String]): Unit = {
         Swing.onEDT {
-            UIManager.put("defaultFont", new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 15))
-            UIManager.put("Button.arc", 12)
-            UIManager.put("Component.arc", 12)
-            UIManager.put("TextComponent.arc", 12)
-            FlatDarkLaf.setup()
+            // El color de acento se aplica a enfoques, selecciones y barras
+            FlatLaf.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", "#6366F1"))
+            FlatLightLaf.setup()
+
+            // Barras de desplazamiento delgadas y redondeadas
+            UIManager.put("ScrollBar.width", 10)
+            UIManager.put("ScrollBar.thumbArc", 999)
+            UIManager.put("ScrollBar.thumbInsets", new java.awt.Insets(2, 2, 2, 2))
 
             val ventana = new Ventana()
             ventana.centerOnScreen()

@@ -1,9 +1,8 @@
 package criptoclave.ui
 
 import criptoclave.modelo.*
-import scala.swing.*
 
-// Funciones de ayuda para mostrar los datos del modelo en pantalla
+// Textos que se muestran a partir de los datos del modelo
 object Formato {
 
     def nombreMetodo(metodo: Metodo): String = {
@@ -16,6 +15,16 @@ object Formato {
         }
     }
 
+    def nombreCorto(metodo: Metodo): String = {
+        metodo match {
+            case Cesar(_)        => "César"
+            case Vigenere(_)     => "Vigenère"
+            case Sustitucion(_)  => "Sustitución"
+            case Huffman         => "Huffman"
+            case Rsa(_, _, _)    => "RSA"
+        }
+    }
+
     def nombreNivel(nivel: Nivel): String = {
         nivel match {
             case Debil  => "Débil"
@@ -24,11 +33,11 @@ object Formato {
         }
     }
 
-    def colorNivel(nivel: Nivel): java.awt.Color = {
+    def mensajeNivel(nivel: Nivel): String = {
         nivel match {
-            case Debil  => new java.awt.Color(192, 57, 43)
-            case Medio  => new java.awt.Color(214, 137, 16)
-            case Fuerte => new java.awt.Color(30, 132, 73)
+            case Debil  => "Es fácil de adivinar. Mejórala con las sugerencias de la derecha."
+            case Medio  => "Es aceptable, pero todavía puede ser más fuerte."
+            case Fuerte => "¡Excelente! Esta clave es difícil de adivinar."
         }
     }
 
@@ -47,40 +56,5 @@ object Formato {
     def resumir(texto: String, maximo: Int): String = {
         if texto.length <= maximo then texto
         else texto.take(maximo) + "..."
-    }
-
-    def lineaDeRegla(resultado: ResultadoRegla): String = {
-        if resultado.cumplida then s"[OK]  ${resultado.nombre}  (+${resultado.puntosObtenidos})"
-        else s"[  ]  ${resultado.nombre}  ->  ${resultado.descripcion}"
-    }
-
-    // Botón que ejecuta el bloque que se le pasa al hacer clic
-    def boton(texto: String)(accion: => Unit): Button = {
-        new Button(Action(texto)(accion))
-    }
-
-    // Nivel, barra de puntaje y lista de reglas de una evaluación
-    def panelEvaluacion(evaluacion: Evaluacion): Component = {
-        val etiquetaNivel = new Label(s"Nivel: ${nombreNivel(evaluacion.nivel)}   -   ${evaluacion.puntaje} / 100")
-        etiquetaNivel.foreground = colorNivel(evaluacion.nivel)
-
-        val barra = new ProgressBar()
-        barra.min = 0
-        barra.max = 100
-        barra.value = evaluacion.puntaje
-
-        val lineas: List[String] = evaluacion.resultados.map(resultado => lineaDeRegla(resultado))
-        val detalle = new TextArea(lineas.mkString("\n"))
-        detalle.editable = false
-
-        val arriba = new BoxPanel(Orientation.Vertical) {
-            contents += etiquetaNivel
-            contents += barra
-        }
-
-        new BorderPanel {
-            layout(arriba) = BorderPanel.Position.North
-            layout(new ScrollPane(detalle)) = BorderPanel.Position.Center
-        }
     }
 }
